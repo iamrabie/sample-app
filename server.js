@@ -4,6 +4,8 @@ require('./src/configs/db.config');
 const express = require("express");
 const app = express();
 const { createServer } = require("node:http");
+const { join } = require("node:path");
+
 
 const UserRoutes = require("./src/routes/user.route");
 const ConversationRoutes = require("./src/routes/conversation.route");
@@ -13,10 +15,10 @@ const server = createServer(app);
 
 
 app.get('/' , (req , res , next) => {
-   res.send("<h1>hellow world!!</h1>");
+//    res.send("<h1>hellow world!!</h1>");
+     res.send(join(__dirname,'index.html'));
 });
 
-console.log("dir name :::::::" , __dirname);
 
 app.use("/api/yap/users", UserRoutes);
 
