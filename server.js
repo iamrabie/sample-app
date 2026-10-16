@@ -33,6 +33,8 @@ app.use("/api/yap/message" , MessageRoutes);
 //fires everytime a client connects.
 io.on('connection' , (socket) => {
     console.log("a user connected");
+
+    socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
     
     //for all the clients
     // io.emit('hello' , 'whats up?');

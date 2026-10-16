@@ -35,6 +35,13 @@
     //   console.log("message is ::" , message);
     // });
 
+
+    socket.on('data' , (arg1 , arg2 , arg3) => {
+      console.log("arg 1 :::" , arg1);
+      console.log("arg 2 :::" , arg2);
+      console.log("arg 3 :::" , arg3);
+    });
+
     form.addEventListener('submit' , (e) => {
       // console.log("yes submit triggered");
       e.preventDefault();
