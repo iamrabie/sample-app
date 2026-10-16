@@ -30,6 +30,10 @@
     const form = document.getElementById("form");
     const input = document.getElementById("input");
 
+    socket.on('hello' , (message) => {
+      console.log("message is ::" , message);
+    });
+
     form.addEventListener('submit' , (e) => {
       console.log("yes submit triggered");
       e.preventDefault();

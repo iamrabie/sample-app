@@ -33,6 +33,12 @@ app.use("/api/yap/message" , MessageRoutes);
 //fires everytime a client connects.
 io.on('connection' , (socket) => {
     console.log("a user connected");
+    
+    //for all the clients
+    // io.emit('hello' , 'whats up?');
+
+    //for all the clients except the sender
+    socket.broadcast.emit("hello" , "yeah");
 
     //on listens to the event
     socket.on("chat-message" , (message) => {
