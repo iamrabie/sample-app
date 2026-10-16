@@ -34,7 +34,14 @@ app.use("/api/yap/message" , MessageRoutes);
 io.on('connection' , (socket) => {
     console.log("a user connected");
 
-    socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
+    socket.on('request' , (p1 , p2 , callback) => {
+        console.log("param 1 ::" , p1);
+        callback({
+          status:'ok'
+        });
+        console.log("param 2 :" , p2);
+    });
+    // socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
     
     //for all the clients
     // io.emit('hello' , 'whats up?');
