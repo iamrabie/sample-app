@@ -38,11 +38,13 @@ io.on('connection' , (socket) => {
     // io.emit('hello' , 'whats up?');
 
     //for all the clients except the sender
-    socket.broadcast.emit("hello" , "yeah");
+    // socket.broadcast.emit("hello" , "lol");
 
     //on listens to the event
     socket.on("chat-message" , (message) => {
-        console.log("input message :::::::::::" , message);
+        // console.log("input message :::::::::::" , message);
+        // socket.broadcast.emit('hello' , message);
+        socket.broadcast.emit('texts' , message);
     });
 
     //triggers when a user disconnects.
