@@ -5,13 +5,15 @@ const express = require("express");
 const app = express();
 const { createServer } = require("node:http");
 const { join } = require("node:path");
-
+const { Server } = require("socket.io");
 
 const UserRoutes = require("./src/routes/user.route");
 const ConversationRoutes = require("./src/routes/conversation.route");
 const MessageRoutes = require("./src/routes/message.route");
 
 const server = createServer(app);
+//using io socket because http only understands normal http request-response, it has no idea how to manage live connections, events rooms etc.
+const io = new Server(server);
 
 
 app.get('/' , (req , res , next) => {
@@ -25,6 +27,23 @@ app.use("/api/yap/users", UserRoutes);
 app.use("/api/yap/conversations" , ConversationRoutes);
 
 app.use("/api/yap/message" , MessageRoutes);
+
+
+// In short: one Node server, two handlers. Express handles normal requests, and io handles live connections. Both share the same server and the same port.
+//fires everytime a client connects.
+io.on('connection' , (socket) => {
+    console.log("a user connected");
+
+    //on listens to the event
+    socket.on("chat-message" , (message) => {
+        console.log("input message :::::::::::" , message);
+    });
+
+    //triggers when a user disconnects.
+    // socket.on('disconnect' , () => {
+    //     console.log("user disconnected");
+    // })
+});
 
 server.listen(5000 , () => {
     console.log("app is running on http://localhost:5000");
