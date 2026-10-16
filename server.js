@@ -16,7 +16,7 @@ const server = createServer(app);
 
 app.get('/' , (req , res , next) => {
 //    res.send("<h1>hellow world!!</h1>");
-     res.send(join(__dirname,'index.html'));
+     res.sendFile(join(__dirname,'index.html'));
 });
 
 
