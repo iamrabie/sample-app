@@ -62,15 +62,15 @@
     });
 
     //acknowledgements:
-    // socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
-    //   if (err) {
-    //     console.log("ERROR OCCURED ::::" , err.message);
-    //   }
+    socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
+      if (err) {
+        console.log("ERROR OCCURED ::::" , err.message);
+      }
 
-    //   else {
-    //     console.log("response" , res);
-    //   }
-    // });
+      else {
+        console.log("response" , res);
+      }
+    });
 
     const acknowledgementWithPromise = async () => {
     

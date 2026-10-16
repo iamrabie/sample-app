@@ -34,6 +34,20 @@ app.use("/api/yap/message" , MessageRoutes);
 io.on('connection' , (socket) => {
     console.log("a user connected");
 
+    //CATCH ALL LISTENERS
+    //catches all incoming events
+    socket.onAny((event , ...args) => {
+      console.log("event name" , event);
+      console.log("and its args::" , args);
+    });
+
+    //catches all outgoing events
+    socket.onAnyOutgoing((event , ...args) => {
+      console.log("event name" , event);
+      console.log("and its args::" , args);
+    });
+
+
     socket.on('request' , (p1 , p2 , callback) => {
         console.log("param 1 ::" , p1);
         //called once, if there are multiple only first one will be considered.
