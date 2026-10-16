@@ -62,14 +62,30 @@
     });
 
     //acknowledgements:
-    socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
-      if (err) {
-        console.log("ERROR OCCURED ::::" , err.message);
+    // socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
+    //   if (err) {
+    //     console.log("ERROR OCCURED ::::" , err.message);
+    //   }
+
+    //   else {
+    //     console.log("response" , res);
+    //   }
+    // });
+
+    const acknowledgementWithPromise = async () => {
+    
+      try {
+          const response = await socket.timeout(5000).emitWithAck('promise' , 1 , 100 , 1000);
+          console.log("response :::" , response);
       }
 
-      else {
-        console.log("response" , res);
+      catch(err) {
+        console.log("ERROR ENCOUNTERED::::::::::" , err.message);
       }
-    });
+
+    }
+
+    acknowledgementWithPromise();
+  
   </script>
 </html>

@@ -36,11 +36,24 @@ io.on('connection' , (socket) => {
 
     socket.on('request' , (p1 , p2 , callback) => {
         console.log("param 1 ::" , p1);
+        //called once, if there are multiple only first one will be considered.
+        //this is server acknowledging the callback then it sends the response to teh client.
         callback({
           status:'ok'
         });
         console.log("param 2 :" , p2);
     });
+
+
+    //ACKNOWLEDGEMENT WITH PROMISE
+    socket.on("promise" , (p1 , p2 , p3 , callback) => {
+        console.log("all params" , p1 , p2 , p3);
+        callback({
+            message:"Acknowledged!",
+            status:"success"
+        });
+    });
+
     // socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
     
     //for all the clients
