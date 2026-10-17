@@ -35,6 +35,11 @@
     //   console.log("message is ::" , message);
     // });
 
+    // socket.emit("join-room");
+
+    // socket.on('send-all' , (text) => {
+    //   console.log(text);
+    // });
 
     // socket.on('data' , (arg1 , arg2 , arg3) => {
     //   console.log("arg 1 :::" , arg1);
@@ -42,50 +47,50 @@
     //   console.log("arg 3 :::" , arg3);
     // });
 
-    form.addEventListener('submit' , (e) => {
-      // console.log("yes submit triggered");
-      e.preventDefault();
+    // form.addEventListener('submit' , (e) => {
+    //   console.log("yes submit triggered");
+    //   e.preventDefault();
 
-      if (input.value) {
-        //emit fires the event
-        socket.emit('chat-message' , input.value);
-        input.value = "";
-      }
-    })
+    //   if (input.value) {
+    //     emit fires the event
+    //     socket.emit('chat-message' , input.value);
+    //     input.value = "";
+    //   }
+    // })
 
-    socket.on('texts' , (text) => {
-      // console.log("ITS WORKING");
-      const item =  document.createElement('item');
-      item.textContent =  text;
-      messages.appendChild(item);
-      window.scrollTo(0 , document.body.scrollHeight);
-    });
+    // socket.on('texts' , (text) => {
+    //   console.log("ITS WORKING");
+    //   const item =  document.createElement('item');
+    //   item.textContent =  text;
+    //   messages.appendChild(item);
+    //   window.scrollTo(0 , document.body.scrollHeight);
+    // });
 
     //acknowledgements:
-    socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
-      if (err) {
-        console.log("ERROR OCCURED ::::" , err.message);
-      }
+    // socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {
+    //   if (err) {
+    //     console.log("ERROR OCCURED ::::" , err.message);
+    //   }
 
-      else {
-        console.log("response" , res);
-      }
-    });
+    //   else {
+    //     console.log("response" , res);
+    //   }
+    // });
 
-    const acknowledgementWithPromise = async () => {
+    // const acknowledgementWithPromise = async () => {
     
-      try {
-          const response = await socket.timeout(5000).emitWithAck('promise' , 1 , 100 , 1000);
-          console.log("response :::" , response);
-      }
+    //   try {
+    //       const response = await socket.timeout(5000).emitWithAck('promise' , 1 , 100 , 1000);
+    //       console.log("response :::" , response);
+    //   }
 
-      catch(err) {
-        console.log("ERROR ENCOUNTERED::::::::::" , err.message);
-      }
+    //   catch(err) {
+    //     console.log("ERROR ENCOUNTERED::::::::::" , err.message);
+    //   }
 
-    }
+    // }
 
-    acknowledgementWithPromise();
+    // acknowledgementWithPromise();
   
   </script>
 </html>

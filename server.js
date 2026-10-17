@@ -34,39 +34,51 @@ app.use("/api/yap/message" , MessageRoutes);
 io.on('connection' , (socket) => {
     console.log("a user connected");
 
+    //ROOMS
+    // socket.on('join-room' , () => {
+    //     socket.join("random room");
+    //     io.to("random room").emit("send-all" , "welcome to the ROOM!");
+    //     io.except("random room").emit("send-all" , "EVERYONE EXCEPT THE ROOM");
+    //     socket.leave("random room");
+    // });
+
+    // io.except("random room").emit("send-all" , "EVERYONE EXCEPT THE ROOM");
+
+
     //CATCH ALL LISTENERS
     //catches all incoming events
-    socket.onAny((event , ...args) => {
-      console.log("event name" , event);
-      console.log("and its args::" , args);
-    });
+    // socket.onAny((event , ...args) => {
+    //   console.log("event name" , event);
+    //   console.log("and its args::" , args);
+    // });
 
     //catches all outgoing events
-    socket.onAnyOutgoing((event , ...args) => {
-      console.log("event name" , event);
-      console.log("and its args::" , args);
-    });
+    // socket.onAnyOutgoing((event , ...args) => {
+    //   console.log("event name" , event);
+    //   console.log("and its args::" , args);
+    // });
 
 
-    socket.on('request' , (p1 , p2 , callback) => {
-        console.log("param 1 ::" , p1);
+    //ACKNOWLEDGEMENT WITH CALLBACK
+    // socket.on('request' , (p1 , p2 , callback) => {
+    //     console.log("param 1 ::" , p1);
         //called once, if there are multiple only first one will be considered.
         //this is server acknowledging the callback then it sends the response to teh client.
-        callback({
-          status:'ok'
-        });
-        console.log("param 2 :" , p2);
-    });
+    //     callback({
+    //       status:'ok'
+    //     });
+    //     console.log("param 2 :" , p2);
+    // });
 
 
     //ACKNOWLEDGEMENT WITH PROMISE
-    socket.on("promise" , (p1 , p2 , p3 , callback) => {
-        console.log("all params" , p1 , p2 , p3);
-        callback({
-            message:"Acknowledged!",
-            status:"success"
-        });
-    });
+    // socket.on("promise" , (p1 , p2 , p3 , callback) => {
+    //     console.log("all params" , p1 , p2 , p3);
+    //     callback({
+    //         message:"Acknowledged!",
+    //         status:"success"
+    //     });
+    // });
 
     // socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
     
@@ -76,12 +88,12 @@ io.on('connection' , (socket) => {
     //for all the clients except the sender
     // socket.broadcast.emit("hello" , "lol");
 
-    //on listens to the event
-    socket.on("chat-message" , (message) => {
+    //LISTENING TO AN EVENT : on listens to the event
+    // socket.on("chat-message" , (message) => {
         // console.log("input message :::::::::::" , message);
         // socket.broadcast.emit('hello' , message);
-        socket.broadcast.emit('texts' , message);
-    });
+    //     socket.broadcast.emit('texts' , message);
+    // });
 
     //triggers when a user disconnects.
     // socket.on('disconnect' , () => {
