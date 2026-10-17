@@ -22,6 +22,8 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+      <button onclick="handleDisconnectUser()" id="isConnected" style="padding:6px;border:5px;">Disconnect</button>
+
   </body>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -30,6 +32,29 @@
     const form = document.getElementById("form");
     const input = document.getElementById("input");
     const messages = document.getElementById("messages");
+    const button = document.getElementById("isConnected");
+
+    const handleDisconnectUser = () => {
+      // e.preventDefault();
+      // console.log("button clicked::");
+
+      if (socket.connected) {
+        socket.disconnect();
+        // socket.io.engine.close();
+        button.innerHTML = "Connect";
+        button.style.backgroundColor = "green";
+        button.style.color = "white";
+        console.log("socket disconnected");
+      }
+
+      else { 
+        socket.connect();
+        button.innerHTML = "Disconnect";
+        button.style.backgroundColor = "red";
+        button.style.color = "white";
+        console.log("socket connected");
+      }
+    }
 
     // socket.on('hello' , (message) => {
     //   console.log("message is ::" , message);
@@ -47,24 +72,29 @@
     //   console.log("arg 3 :::" , arg3);
     // });
 
-    // form.addEventListener('submit' , (e) => {
-    //   console.log("yes submit triggered");
-    //   e.preventDefault();
+    form.addEventListener('submit' , (e) => {
+      // console.log("yes submit triggered");
+      e.preventDefault();
 
-    //   if (input.value) {
-    //     emit fires the event
-    //     socket.emit('chat-message' , input.value);
-    //     input.value = "";
-    //   }
-    // })
+      if (input.value) {
+        // emit fires the event
+        // console.log("input is present");
+        socket.emit('chat-message' , input.value);
+        input.value = "";
+      }
+    })
 
-    // socket.on('texts' , (text) => {
-    //   console.log("ITS WORKING");
-    //   const item =  document.createElement('item');
-    //   item.textContent =  text;
-    //   messages.appendChild(item);
-    //   window.scrollTo(0 , document.body.scrollHeight);
-    // });
+    socket.on('texts' , (text) => {
+      // console.log("ITS WORKING");
+      const item =  document.createElement('li');
+      item.textContent =  text;
+      messages.appendChild(item);
+      window.scrollTo(0 , document.body.scrollHeight);
+    });
+
+    socket.on("connect", () => {
+      console.log("recovered:", socket.recovered);
+    });
 
     //acknowledgements:
     // socket.timeout(2000).emit('request' , 'param1' , 'param2' , (err , res) => {

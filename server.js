@@ -13,7 +13,9 @@ const MessageRoutes = require("./src/routes/message.route");
 
 const server = createServer(app);
 //using io socket because http only understands normal http request-response, it has no idea how to manage live connections, events rooms etc.
-const io = new Server(server);
+const io = new Server(server ,  {
+  connectionStateRecovery: {}
+});
 
 
 app.get('/' , (req , res , next) => {
@@ -89,11 +91,11 @@ io.on('connection' , (socket) => {
     // socket.broadcast.emit("hello" , "lol");
 
     //LISTENING TO AN EVENT : on listens to the event
-    // socket.on("chat-message" , (message) => {
+    socket.on("chat-message" , (message) => {
         // console.log("input message :::::::::::" , message);
         // socket.broadcast.emit('hello' , message);
-    //     socket.broadcast.emit('texts' , message);
-    // });
+        io.emit('texts' , message);
+    });
 
     //triggers when a user disconnects.
     // socket.on('disconnect' , () => {
