@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const { createServer } = require("node:http");
 const { join } = require("node:path");
-const { Server } = require("socket.io");
+
 
 const UserRoutes = require("./src/routes/user.route");
 const ConversationRoutes = require("./src/routes/conversation.route");
@@ -30,78 +30,6 @@ app.use("/api/yap/conversations" , ConversationRoutes);
 
 app.use("/api/yap/message" , MessageRoutes);
 
-
-// In short: one Node server, two handlers. Express handles normal requests, and io handles live connections. Both share the same server and the same port.
-//fires everytime a client connects.
-io.on('connection' , (socket) => {
-    console.log("a user connected");
-
-    //ROOMS
-    // socket.on('join-room' , () => {
-    //     socket.join("random room");
-    //     io.to("random room").emit("send-all" , "welcome to the ROOM!");
-    //     io.except("random room").emit("send-all" , "EVERYONE EXCEPT THE ROOM");
-    //     socket.leave("random room");
-    // });
-
-    // io.except("random room").emit("send-all" , "EVERYONE EXCEPT THE ROOM");
-
-
-    //CATCH ALL LISTENERS
-    //catches all incoming events
-    // socket.onAny((event , ...args) => {
-    //   console.log("event name" , event);
-    //   console.log("and its args::" , args);
-    // });
-
-    //catches all outgoing events
-    // socket.onAnyOutgoing((event , ...args) => {
-    //   console.log("event name" , event);
-    //   console.log("and its args::" , args);
-    // });
-
-
-    //ACKNOWLEDGEMENT WITH CALLBACK
-    // socket.on('request' , (p1 , p2 , callback) => {
-    //     console.log("param 1 ::" , p1);
-        //called once, if there are multiple only first one will be considered.
-        //this is server acknowledging the callback then it sends the response to teh client.
-    //     callback({
-    //       status:'ok'
-    //     });
-    //     console.log("param 2 :" , p2);
-    // });
-
-
-    //ACKNOWLEDGEMENT WITH PROMISE
-    // socket.on("promise" , (p1 , p2 , p3 , callback) => {
-    //     console.log("all params" , p1 , p2 , p3);
-    //     callback({
-    //         message:"Acknowledged!",
-    //         status:"success"
-    //     });
-    // });
-
-    // socket.emit('data' , 1 , "apple" , {age:27 , buffer:Buffer.from([6])} );
-    
-    //for all the clients
-    // io.emit('hello' , 'whats up?');
-
-    //for all the clients except the sender
-    // socket.broadcast.emit("hello" , "lol");
-
-    //LISTENING TO AN EVENT : on listens to the event
-    socket.on("chat-message" , (message) => {
-        // console.log("input message :::::::::::" , message);
-        // socket.broadcast.emit('hello' , message);
-        io.emit('texts' , message);
-    });
-
-    //triggers when a user disconnects.
-    // socket.on('disconnect' , () => {
-    //     console.log("user disconnected");
-    // })
-});
 
 server.listen(5000 , () => {
     console.log("app is running on http://localhost:5000");
