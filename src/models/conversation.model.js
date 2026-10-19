@@ -9,7 +9,7 @@ const AttachmentSchema = new mongoose.Schema({
 const ConversationSchema = new mongoose.Schema({
 
     type:{ type:String , enum:['private' , 'group'] , default:'private' },
-    users:[
+    members:[
         {
             userId:{ type:mongoose.Schema.ObjectId , required:true },
             isPinned:{type:Boolean , default:false  },
@@ -18,7 +18,7 @@ const ConversationSchema = new mongoose.Schema({
             markAsUnread: { type:Boolean , default:false}
         }
     ],
-    messages:[mongoose.Schema.ObjectId],
+    // messages:[mongoose.Schema.ObjectId],
     admins:[mongoose.Schema.ObjectId],
     attachments:[AttachmentSchema]
 
