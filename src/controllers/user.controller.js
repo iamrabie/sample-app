@@ -44,5 +44,10 @@ const handleRegistration = async (req, res, next) => {
     }
 };
 
-module.exports = { handleRegistration };
+
+const handleLogin = (req , res , next) => {
+    console.log("usr logn controller");
+}
+
+module.exports = { handleRegistration , handleLogin };
 // exports.handleRegistration = handleRegistration;
