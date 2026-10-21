@@ -30,7 +30,10 @@ const handleRegistration = async (req, res, next) => {
 
     res.status(201).json({
       message: "User is registered successfully.",
-      data: userDetails,
+      data: {
+        id:userDetails._id,
+        ...userDetails
+      },
       success: true,
       error: false,
     });
@@ -84,6 +87,7 @@ const handleLogin = async (req, res, next) => {
     res.status(200).json({
       message: "User logged in successfully",
       data: {
+        id: doesUserExists._id,
         email: doesUserExists.email,
         name: doesUserExists.name,
         token: doesUserExists.token,
@@ -101,5 +105,34 @@ const handleLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { handleRegistration, handleLogin };
+const handleGetAllUsers = async (req , res , next) => {
+
+  try {
+    const allUsers = await User.find();
+    console.log(allUsers);
+
+    if (allUsers.length == 0) {
+      return res.status(200).json({  
+      message: "No users found",
+      data: allUsers,
+      success: true,
+      error: null
+    });
+
+    }
+
+    res.status(200).json({  
+      message: "All users fetched successfully",
+      data: allUsers,
+      success: true,
+      error: null
+    });
+  }
+
+  catch(err) {
+    console.log("err message" , err.message);
+  }
+};
+
+module.exports = { handleRegistration, handleLogin, handleGetAllUsers};
 // exports.handleRegistration = handleRegistration;

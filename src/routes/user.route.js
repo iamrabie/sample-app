@@ -5,9 +5,9 @@ const userController = require("../controllers/user.controller");
 
 router.post('/sign-up', userController.handleRegistration);
 
-router.post('/login', userController.handleLogin);
+router.post('/sign-in', userController.handleLogin);
 
-// router.get('/' , handleGetAllUsers);
+router.get('/' , userController.handleGetAllUsers);
 // router.get('/:userId', handleGetAUser);
 // router.get('/search-user' , handleSearchUser);
 
